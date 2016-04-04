@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player2 : MonoBehaviour
+{
 
     public float maxSpeed;
     public float speed;
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rbPlayer;
     private Animator animator;
 
-	void Start ()
+    void Start()
     {
         maxSpeed = 3f;
         speed = 50f;
@@ -23,36 +24,36 @@ public class Player : MonoBehaviour {
         rbPlayer = gameObject.GetComponent<Rigidbody2D>();
 
         animator = gameObject.GetComponent<Animator>();
-	}
-	
-	void Update ()
+    }
+
+    void Update()
     {
 
         animator.SetBool("Grounded", grounded);
-        animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+        animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal2")));
 
-        if (Input.GetAxis("") < -0.1f)
+        if (Input.GetAxis("Horizontal2") < -0.1f)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        if (Input.GetAxis("Horizontal") > 0.1f)
+        if (Input.GetAxis("Horizontal2") > 0.1f)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
 
         oldJumpState = jumpState;
-        jumpState = Input.GetButton("Jump");
+        jumpState = Input.GetButton("Jump2");
 
         if (jumpState && !oldJumpState && grounded)
         {
             rbPlayer.AddForce(Vector2.up * jumpPower);
         }
-	}
+    }
 
     void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("Horizontal2");
 
         rbPlayer.AddForce((Vector2.right * speed) * h);
 
