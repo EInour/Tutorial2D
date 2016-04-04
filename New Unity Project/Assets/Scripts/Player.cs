@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     public bool grounded;
     private bool jumpState;
     private bool oldJumpState;
+    private bool canDoubleJump;
 
     private Rigidbody2D rbPlayer;
     private Animator animator;
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour {
 	void Start ()
     {
         maxSpeed = 3f;
-        speed = 50f;
+        speed = 100;
         jumpPower = 250f;
 
         rbPlayer = gameObject.GetComponent<Rigidbody2D>();
@@ -27,8 +28,24 @@ public class Player : MonoBehaviour {
 	void Update ()
     {
 
+        Vector3 easeVelocity = rbPlayer.velocity;
+        easeVelocity.y = rbPlayer.velocity.y;
+        easeVelocity.z = 20f;
+        easeVelocity.x *= 0.75f;
+
+
         animator.SetBool("Grounded", grounded);
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
+
+        //Fake friction
+
+        if (grounded)
+        {
+            rbPlayer.velocity = easeVelocity;
+            canDoubleJump = true;
+        }
+
 
         if (Input.GetAxis("Horizontal") < -0.1f)
         {
@@ -43,9 +60,22 @@ public class Player : MonoBehaviour {
         oldJumpState = jumpState;
         jumpState = Input.GetButton("Jump");
 
-        if (jumpState && !oldJumpState && grounded)
+        if (jumpState && !oldJumpState)
         {
-            rbPlayer.AddForce(Vector2.up * jumpPower);
+            if(grounded)
+            {
+                rbPlayer.AddForce(Vector2.up * jumpPower);
+                
+            }
+            else 
+            {
+                if (canDoubleJump)
+                {
+                    canDoubleJump = false;
+                    rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0);
+                    rbPlayer.AddForce(Vector2.up * jumpPower / 1.75f);
+                }
+            }
         }
 	}
 
