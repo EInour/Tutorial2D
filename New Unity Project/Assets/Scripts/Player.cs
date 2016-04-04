@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
         animator.SetBool("Grounded", grounded);
         animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
-        if (Input.GetAxis("") < -0.1f)
+        if (Input.GetAxis("Horizontal") < -0.1f)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
