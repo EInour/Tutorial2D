@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
 
 	void Start ()
     {
-        maxSpeed = 3f;
+        maxSpeed = 6f;
         speed = 50f;
         jumpPower = 250f;
 
