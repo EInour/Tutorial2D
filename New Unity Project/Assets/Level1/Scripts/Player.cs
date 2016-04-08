@@ -6,11 +6,12 @@ public class Player : MonoBehaviour {
     public float maxSpeed;
     public float speed;
     public float jumpPower;
+	public bool grounded;
 
-    public bool grounded;
     private bool jumpState;
     private bool oldJumpState;
 
+	public BoxCollider2D goalCol;
     private Rigidbody2D rbPlayer;
     private Animator animator;
 
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour {
         maxSpeed = 3f;
         speed = 50f;
         jumpPower = 250f;
+		goalCol = goalCol.GetComponent<BoxCollider2D> ();
 
         rbPlayer = gameObject.GetComponent<Rigidbody2D>();
 
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour {
         {
             rbPlayer.AddForce(Vector2.up * jumpPower);
         }
+
 	}
 
     void FixedUpdate()
@@ -66,4 +69,11 @@ public class Player : MonoBehaviour {
             rbPlayer.velocity = new Vector2(-maxSpeed, rbPlayer.velocity.y);
         }
     }
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.CompareTag ("Goal")) 
+		{
+			Application.LoadLevel (0);
+		}
+	}
 }
