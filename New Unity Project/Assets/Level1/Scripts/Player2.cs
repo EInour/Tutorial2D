@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player2 : MonoBehaviour
+{
 
     public float maxSpeed;
     public float speed;
@@ -17,17 +18,15 @@ public class Player : MonoBehaviour {
     public bool autoAimed;
 
     private Rigidbody2D rbPlayer;
-    public Player2 player2;
+    public Player player1;
     private Animator animator;
-
 
     public Transform firePoint;
     public GameObject laserBullet;
 
-
     void Start()
     {
-        maxSpeed = 6f;
+        maxSpeed = 3f;
         speed = 50f;
         jumpPower = 250f;
 
@@ -37,11 +36,12 @@ public class Player : MonoBehaviour {
 
         animator = gameObject.GetComponent<Animator>();
 
-        player2 = player2.GetComponent<Player2>();
+        player1 = player1.GetComponent<Player>();
     }
 
     void Update()
     {
+        
 
         if (speedBoostTimer > 0)
         {
@@ -55,20 +55,20 @@ public class Player : MonoBehaviour {
         }
 
         animator.SetBool("Grounded", grounded);
-        animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+        animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal2")));
 
-        if (Input.GetAxis("Horizontal") < -0.1f)
+        if (Input.GetAxis("Horizontal2") < -0.1f)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        if (Input.GetAxis("Horizontal") > 0.1f)
+        if (Input.GetAxis("Horizontal2") > 0.1f)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
 
         oldJumpState = jumpState;
-        jumpState = Input.GetButton("Jump");
+        jumpState = Input.GetButton("Jump2");
 
 
         //DoubleJump
@@ -87,21 +87,19 @@ public class Player : MonoBehaviour {
         {
             HasDoubleJumped = false;
 
-            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0);
-
             rbPlayer.AddForce(Vector2.up * jumpPower);
         }
 
         //Shoot
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire2"))
         {
             Instantiate(laserBullet, firePoint.position, firePoint.rotation);
         }
 
-        if (player2.autoAimed)
+        if (player1.autoAimed)
         {
             Instantiate(laserBullet, firePoint.position, firePoint.rotation);
-            player2.autoAimed = false;
+            player1.autoAimed = false;
         }
     }
 
@@ -113,7 +111,7 @@ public class Player : MonoBehaviour {
             knockedBack = false;
         }
 
-        float h = Input.GetAxis("Horizontal");
+        float h = Input.GetAxis("Horizontal2");
 
         rbPlayer.AddForce((Vector2.right * speed) * h);
 
@@ -142,5 +140,4 @@ public class Player : MonoBehaviour {
             speedBoostTimer = 2;
         }
     }
-
 }
