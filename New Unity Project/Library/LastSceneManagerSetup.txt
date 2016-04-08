@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/TestPlatform.unity
+- path: Assets/Level1/Scenes/DarkCity01.unity
   isLoaded: 1
   isActive: 1
