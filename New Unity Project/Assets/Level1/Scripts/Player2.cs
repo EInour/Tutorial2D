@@ -17,7 +17,7 @@ public class Player2 : MonoBehaviour
 
     void Start()
     {
-        maxSpeed = 6f;
+        maxSpeed = 3f;
         speed = 50f;
         jumpPower = 250f;
 
